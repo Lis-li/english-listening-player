@@ -1,0 +1,55 @@
+{
+  "id": "original-sample",
+  "title": "A Quiet Morning Practice",
+  "voice": "en-US-AriaNeural",
+  "voice_label": "美式女声",
+  "source_hash": null,
+  "created_at": "2026-07-10T07:37:50+00:00",
+  "updated_at": "2026-07-10T07:37:50+00:00",
+  "word_count": 132,
+  "removed_count": 0,
+  "full_text": "Maya wakes up before the city becomes busy. She opens the window and listens to the soft sounds of birds in the trees. After making a cup of tea, she chooses a short English story and puts on her headphones. She plays the first sentence slowly and writes down the words she can hear. Some words are difficult, so she listens again without looking at the text. On the third try, the sentence sounds clearer and she notices how the speaker connects several words. Maya saves one useful expression in her notes and creates her own example sentence. She does not try to understand everything at once. After twenty minutes, she stops and reviews what she learned. This small daily habit helps her feel calmer and more confident when she hears English.",
+  "full_audio": "/generated/original-sample/audio/full-article.mp3",
+  "sentences": [
+    {
+      "text": "Maya wakes up before the city becomes busy.",
+      "audio": "/generated/original-sample/audio/sentence-001.mp3"
+    },
+    {
+      "text": "She opens the window and listens to the soft sounds of birds in the trees.",
+      "audio": "/generated/original-sample/audio/sentence-002.mp3"
+    },
+    {
+      "text": "After making a cup of tea, she chooses a short English story and puts on her headphones.",
+      "audio": "/generated/original-sample/audio/sentence-003.mp3"
+    },
+    {
+      "text": "She plays the first sentence slowly and writes down the words she can hear.",
+      "audio": "/generated/original-sample/audio/sentence-004.mp3"
+    },
+    {
+      "text": "Some words are difficult, so she listens again without looking at the text.",
+      "audio": "/generated/original-sample/audio/sentence-005.mp3"
+    },
+    {
+      "text": "On the third try, the sentence sounds clearer and she notices how the speaker connects several words.",
+      "audio": "/generated/original-sample/audio/sentence-006.mp3"
+    },
+    {
+      "text": "Maya saves one useful expression in her notes and creates her own example sentence.",
+      "audio": "/generated/original-sample/audio/sentence-007.mp3"
+    },
+    {
+      "text": "She does not try to understand everything at once.",
+      "audio": "/generated/original-sample/audio/sentence-008.mp3"
+    },
+    {
+      "text": "After twenty minutes, she stops and reviews what she learned.",
+      "audio": "/generated/original-sample/audio/sentence-009.mp3"
+    },
+    {
+      "text": "This small daily habit helps her feel calmer and more confident when she hears English.",
+      "audio": "/generated/original-sample/audio/sentence-010.mp3"
+    }
+  ]
+}

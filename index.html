@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>英语新闻美式精听播放器</title>
+  <script>
+    if (window.location.protocol === "file:") {
+      window.location.replace("http://127.0.0.1:8765/");
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <nav id="pageNav" class="page-nav" aria-label="页面导航" hidden>
+      <button id="backButton" class="header-button" type="button">返回上一页</button>
+      <button id="homeButton" class="header-button" type="button">返回首页</button>
+    </nav>
+
+    <header class="topbar">
+      <div class="title-block">
+        <p class="eyebrow">ENGLISH NEWS LISTENING PRACTICE</p>
+        <h1 id="articleTitle">等待导入 Word 文档</h1>
+        <p id="articleStats" class="article-stats"></p>
+      </div>
+      <div class="header-actions">
+        <div class="voice-row" aria-label="发音选择" hidden>
+          <div class="voice-badge">
+            <span class="status-dot" aria-hidden="true"></span>
+            美式发音
+          </div>
+          <div id="voiceControl" class="segmented-control voice-control" role="group" aria-label="发音声音">
+            <button class="segment active" type="button" data-voice="en-US-AriaNeural">女声</button>
+            <button class="segment" type="button" data-voice="en-US-GuyNeural">男声</button>
+          </div>
+        </div>
+        <div class="action-row">
+          <button id="importButton" class="import-button" type="button">
+            <span aria-hidden="true">＋</span>
+            导入 Word
+          </button>
+          <button id="pasteButton" class="header-button" type="button">粘贴文本</button>
+          <button id="libraryButton" class="header-button" type="button">文章资料库</button>
+          <button id="notesButton" class="header-button" type="button">学习笔记</button>
+          <input id="fileInput" type="file" accept=".docx" hidden>
+        </div>
+      </div>
+    </header>
+
+    <section id="libraryPanel" class="workspace-panel" aria-labelledby="libraryHeading" hidden>
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">LOCAL LIBRARY</p>
+          <h2 id="libraryHeading">文章资料库</h2>
+        </div>
+      </div>
+      <div id="libraryList" class="library-list"></div>
+    </section>
+
+    <section id="notesPanel" class="workspace-panel" aria-labelledby="notesHeading" hidden>
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">STUDY NOTES</p>
+          <h2 id="notesHeading">学习笔记</h2>
+        </div>
+      </div>
+      <p id="notesEmpty" class="panel-empty">还没有学习笔记。打开一篇文章后，可以收藏完整句子或鼠标选中的文字。</p>
+      <div id="notesList" class="notes-list"></div>
+    </section>
+
+    <div id="statusBar" class="status-bar" role="status" hidden>
+      <span class="spinner" aria-hidden="true"></span>
+      <span id="statusText">正在处理文档</span>
+    </div>
+
+    <section class="control-band" aria-label="播放设置" hidden>
+      <div class="control-group">
+        <span class="control-label">模式</span>
+        <div class="segmented-control mode-control" role="group" aria-label="播放模式">
+          <button id="sentenceMode" class="segment active" type="button">逐句</button>
+          <button id="fullMode" class="segment" type="button">整篇</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <span class="control-label">速度</span>
+        <div id="speedControl" class="segmented-control speed-control" role="group" aria-label="播放速度">
+          <button class="segment" type="button" data-speed="0.5">0.5×</button>
+          <button class="segment active" type="button" data-speed="0.75">0.75×</button>
+          <button class="segment" type="button" data-speed="1">1.0×</button>
+          <button class="segment" type="button" data-speed="1.25">1.25×</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="player-panel" aria-labelledby="player-heading" hidden>
+      <div class="sentence-meta">
+        <h2 id="player-heading">尚未载入文章</h2>
+        <div class="sentence-actions">
+          <button id="saveSentenceButton" class="save-sentence-button" type="button" disabled>收藏本句</button>
+          <strong id="sentenceCounter">0 / 0</strong>
+        </div>
+      </div>
+
+      <div class="now-playing">
+        <p id="currentSentence" class="current-sentence empty-message">点击右上角“导入 Word”，选择一篇英语新闻。</p>
+        <div id="currentMilestones" class="current-milestones" hidden></div>
+      </div>
+
+      <div id="dictationPanel" class="dictation-panel" hidden>
+        <div class="dictation-heading">
+          <label for="dictationInput">听写输入</label>
+          <span id="dictationStatus">0 个词</span>
+        </div>
+        <textarea id="dictationInput" rows="5" placeholder="先听这一句，把你听到的内容打在这里。显示原文后可以对照检查。"></textarea>
+        <div class="dictation-tools">
+          <span>每一句会自动保存到本地进度。</span>
+          <button id="clearDictationButton" class="text-button" type="button">清空本句</button>
+        </div>
+      </div>
+
+      <div id="dictationReview" class="dictation-review" hidden>
+        <div class="dictation-heading">
+          <h3>听写对比</h3>
+          <span id="dictationReviewStatus"></span>
+        </div>
+        <div class="review-grid">
+          <div>
+            <strong>你的听写</strong>
+            <p id="dictationAnswer" class="review-text"></p>
+          </div>
+          <div>
+            <strong>原文</strong>
+            <p id="dictationOriginal" class="review-text"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <span id="currentTime">0:00</span>
+        <input id="progress" type="range" min="0" max="1000" value="0" aria-label="播放进度">
+        <span id="duration">0:00</span>
+      </div>
+
+      <div class="transport" aria-label="播放控制">
+        <button id="previousButton" class="icon-button" type="button" title="上一句" aria-label="上一句">◀</button>
+        <button id="backFiveButton" class="icon-button seek-button" type="button" title="后退 5 秒" aria-label="后退 5 秒">−5</button>
+        <button id="replayButton" class="icon-button" type="button" title="重播" aria-label="重播">↻</button>
+        <button id="playButton" class="play-button" type="button" aria-label="播放">▶</button>
+        <button id="forwardFiveButton" class="icon-button seek-button" type="button" title="前进 5 秒" aria-label="前进 5 秒">+5</button>
+        <button id="nextButton" class="icon-button" type="button" title="下一句" aria-label="下一句">▶</button>
+        <button id="transcriptButton" class="text-button" type="button">隐藏原文</button>
+        <button id="returnArticleButton" class="text-button return-article-button" type="button" hidden>返回文章</button>
+      </div>
+
+      <audio id="audio" preload="metadata"></audio>
+    </section>
+
+    <section id="sentenceSection" class="sentence-section" aria-labelledby="sentence-list-heading" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">SENTENCE INDEX</p>
+          <h2 id="sentence-list-heading">句子列表</h2>
+        </div>
+      </div>
+      <ol id="sentenceList" class="sentence-list"></ol>
+    </section>
+  </main>
+
+  <div id="selectionToolbar" class="selection-toolbar" hidden>
+    <span id="selectionPreview"></span>
+    <button id="playSelectionButton" type="button">播放选中内容</button>
+    <button id="saveSelectionButton" type="button">收藏</button>
+  </div>
+
+  <dialog id="noteDialog" class="note-dialog">
+    <form method="dialog">
+      <h2>保存学习笔记</h2>
+      <p id="noteTextPreview" class="note-preview"></p>
+      <label for="noteComment">个人备注</label>
+      <textarea id="noteComment" rows="4" placeholder="例如：注意连读、弱读或重音"></textarea>
+      <div class="dialog-actions">
+        <button value="cancel" class="text-button">取消</button>
+        <button id="confirmNoteButton" value="default" class="import-button">保存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="pasteDialog" class="note-dialog paste-dialog">
+    <form method="dialog">
+      <h2>粘贴英文文本</h2>
+      <label for="pasteTextInput">英文内容</label>
+      <textarea id="pasteTextInput" rows="9" placeholder="可以粘贴新闻标题和正文；如果没有标题，系统会自动用开头内容生成标题。"></textarea>
+      <div class="dialog-actions">
+        <button value="cancel" class="text-button">取消</button>
+        <button id="confirmPasteButton" value="default" class="import-button">生成文章</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# User-generated articles, audio, notes, and learning progress
+generated/*
+!generated/original-sample/
+!generated/original-sample/**
+
+# Runtime logs and Python caches
+*.log
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local environments and secrets
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Tool and editor files
+.vscode/
+.idea/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+
+# Locally bundled dependency folders
+.tts-tools/
+node_modules/
