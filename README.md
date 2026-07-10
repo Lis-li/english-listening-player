@@ -4,6 +4,12 @@ A local-first English listening practice web app. Import English text or a `.doc
 
 一个在本地运行的英语听力练习网页。你可以导入英文文本或 `.docx` 文档，生成自然语音，逐句练习，记录笔记和学习进度。
 
+## Online demo / 在线演示
+
+Open the [GitHub Pages demo](https://lis-li.github.io/english-listening-player/) to try the bundled original sample directly in your browser.
+
+打开 [GitHub Pages 在线 Demo](https://lis-li.github.io/english-listening-player/) 即可试听原创示例、逐句练习和保存浏览器本地进度。GitHub Pages 不运行 Python 后端，因此导入 Word、粘贴新文本和生成新语音需使用下方的本地完整版。
+
 ## Features / 功能
 
 - Import pasted English text or Word `.docx` files.

@@ -1099,3 +1099,18 @@ h2 {
     font-size: 16px;
   }
 }
+/* GitHub Pages demo notice */
+.demo-banner {
+  position: relative;
+  z-index: 20;
+  width: min(1180px, calc(100% - 32px));
+  margin: 16px auto 0;
+  padding: 12px 18px;
+  border: 1px solid rgba(64, 116, 255, 0.28);
+  border-radius: 14px;
+  background: rgba(235, 242, 255, 0.94);
+  color: #1f3f78;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  box-shadow: 0 8px 24px rgba(32, 62, 120, 0.08);
+}
