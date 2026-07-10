@@ -64,6 +64,95 @@ const speedButtons = [...document.querySelectorAll("[data-speed]")];
 const voiceButtons = [...document.querySelectorAll("[data-voice]")];
 const WORD_MILESTONE_INTERVAL = 100;
 const DEFAULT_VOICE = "en-US-AriaNeural";
+const IS_STATIC_DEMO = window.location.hostname.endsWith(".github.io")
+  || new URLSearchParams(window.location.search).has("demo");
+const DEMO_BASE_URL = new URL("./", window.location.href);
+const DEMO_ARTICLE_ID = "original-sample";
+const DEMO_STATE_KEY = "english-listening-player-demo-state";
+
+let demoManifestPromise = null;
+
+function readDemoState() {
+  try {
+    return {
+      ...defaultClientState(),
+      ...JSON.parse(window.localStorage.getItem(DEMO_STATE_KEY) || "{}")
+    };
+  } catch {
+    return defaultClientState();
+  }
+}
+
+function writeDemoState(state) {
+  window.localStorage.setItem(DEMO_STATE_KEY, JSON.stringify(state));
+  return state;
+}
+
+async function loadDemoManifest() {
+  if (!demoManifestPromise) {
+    demoManifestPromise = fetch(
+      new URL("generated/original-sample/manifest.json", DEMO_BASE_URL)
+    ).then(async (response) => {
+      if (!response.ok) throw new Error("在线示例资源加载失败");
+      const payload = await response.json();
+      const assetUrl = (path) => new URL(String(path).replace(/^\/+/, ""), DEMO_BASE_URL).href;
+      payload.full_audio = assetUrl(payload.full_audio);
+      payload.sentences = payload.sentences.map((sentence) => ({
+        ...sentence,
+        audio: assetUrl(sentence.audio)
+      }));
+      return payload;
+    });
+  }
+  return structuredClone(await demoManifestPromise);
+}
+
+async function demoApi(url, options = {}) {
+  const method = String(options.method || "GET").toUpperCase();
+  const manifest = await loadDemoManifest();
+  const state = readDemoState();
+  const articleWithState = { ...manifest, state };
+
+  if (method === "GET" && (url === "/api/sample" || url === `/api/articles/${DEMO_ARTICLE_ID}`)) {
+    return articleWithState;
+  }
+  if (method === "GET" && url === "/api/articles") {
+    return {
+      articles: [{
+        id: manifest.id,
+        title: manifest.title,
+        voice: manifest.voice,
+        source_hash: manifest.source_hash,
+        word_count: manifest.word_count,
+        sentence_count: manifest.sentences.length,
+        note_count: state.notes?.length || 0
+      }]
+    };
+  }
+  if (method === "POST" && url === `/api/articles/${DEMO_ARTICLE_ID}/state`) {
+    return writeDemoState(JSON.parse(options.body || "{}"));
+  }
+  if (method === "GET" && url === "/api/notes") {
+    const notes = state.notes || [];
+    return {
+      groups: notes.length ? [{
+        id: manifest.id,
+        title: manifest.title,
+        source_hash: manifest.source_hash,
+        word_count: manifest.word_count,
+        sentence_count: manifest.sentences.length,
+        note_count: notes.length,
+        notes
+      }] : []
+    };
+  }
+  if (method === "POST" && url === `/api/articles/${DEMO_ARTICLE_ID}/notes`) {
+    const notes = JSON.parse(options.body || "{}").notes || [];
+    writeDemoState({ ...state, notes });
+    return { notes, note_count: notes.length };
+  }
+  throw new Error("此功能需要 Python 后端，在线 Demo 仅提供原创示例体验。");
+}
 
 const articleControls = [
   sentenceMode,
@@ -108,6 +197,7 @@ function countEnglishWords(text) {
 }
 
 async function api(url, options = {}) {
+  if (IS_STATIC_DEMO) return demoApi(url, options);
   const response = await fetch(url, options);
   const payload = await response.json();
   if (!response.ok) throw new Error(payload.error || "请求失败");
@@ -199,8 +289,8 @@ function setTopbarHome(isHome) {
   topbar.classList.toggle("home-topbar", isHome);
   topbar.classList.toggle("article-topbar", !isHome);
   voiceRow.hidden = isHome;
-  importButton.hidden = !isHome;
-  pasteButton.hidden = !isHome;
+  importButton.hidden = !isHome || IS_STATIC_DEMO;
+  pasteButton.hidden = !isHome || IS_STATIC_DEMO;
   libraryButton.hidden = !isHome;
   notesButton.hidden = false;
   pageNav.hidden = true;
@@ -1085,6 +1175,10 @@ progress.addEventListener("change", seekFromProgress);
 
 window.addEventListener("beforeunload", () => {
   if (!article) return;
+  if (IS_STATIC_DEMO) {
+    writeDemoState(statePayload());
+    return;
+  }
   navigator.sendBeacon(
     `/api/articles/${article.id}/state`,
     new Blob([JSON.stringify(statePayload())], { type: "application/json" })
@@ -1100,5 +1194,29 @@ document.addEventListener("keydown", (event) => {
   if (mode === "sentence" && event.code === "ArrowLeft") previousButton.click();
 });
 
-showEmptyState();
-refreshLibrary();
+async function bootstrap() {
+  showEmptyState();
+  if (!IS_STATIC_DEMO) {
+    await refreshLibrary();
+    return;
+  }
+
+  document.body.classList.add("static-demo");
+  importButton.hidden = true;
+  pasteButton.hidden = true;
+  playSelectionButton.hidden = true;
+  voiceButtons.forEach((button) => { button.disabled = true; });
+
+  const banner = document.createElement("aside");
+  banner.className = "demo-banner";
+  banner.textContent = "在线 Demo：可试听原创示例、逐句练习和保存本地学习进度。导入文档和生成新语音需在电脑上运行完整版。";
+  document.body.prepend(banner);
+
+  try {
+    await loadArticle(await api("/api/sample"), { rememberView: false });
+  } catch (error) {
+    window.alert(error.message);
+  }
+}
+
+bootstrap();
