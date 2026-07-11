@@ -1255,7 +1255,8 @@ async function bootstrap() {
   document.body.prepend(banner);
 
   try {
-    await loadArticle(await api("/api/sample"), { rememberView: false });
+    await refreshLibrary();
+    showHome({ remember: false, clearHistory: true });
   } catch (error) {
     window.alert(error.message);
   }
