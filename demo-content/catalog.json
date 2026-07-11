@@ -1,0 +1,45 @@
+{
+  "default_article": "morning",
+  "articles": [
+    {
+      "id": "morning",
+      "title": "A Quiet Morning Practice",
+      "word_count": 132,
+      "sentence_count": 10,
+      "variants": {
+        "en-US-AriaNeural": "demo-content/demo-morning-aria/manifest.json",
+        "en-US-GuyNeural": "demo-content/demo-morning-guy/manifest.json"
+      }
+    },
+    {
+      "id": "library",
+      "title": "An Afternoon at the Library",
+      "word_count": 135,
+      "sentence_count": 10,
+      "variants": {
+        "en-US-AriaNeural": "demo-content/demo-library-aria/manifest.json",
+        "en-US-GuyNeural": "demo-content/demo-library-guy/manifest.json"
+      }
+    },
+    {
+      "id": "garden",
+      "title": "A Small Community Garden",
+      "word_count": 138,
+      "sentence_count": 10,
+      "variants": {
+        "en-US-AriaNeural": "demo-content/demo-garden-aria/manifest.json",
+        "en-US-GuyNeural": "demo-content/demo-garden-guy/manifest.json"
+      }
+    },
+    {
+      "id": "train",
+      "title": "The Last Train Home",
+      "word_count": 143,
+      "sentence_count": 10,
+      "variants": {
+        "en-US-AriaNeural": "demo-content/demo-train-aria/manifest.json",
+        "en-US-GuyNeural": "demo-content/demo-train-guy/manifest.json"
+      }
+    }
+  ]
+}

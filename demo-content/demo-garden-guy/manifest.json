@@ -1,0 +1,55 @@
+{
+  "id": "demo-garden-guy",
+  "title": "A Small Community Garden",
+  "voice": "en-US-GuyNeural",
+  "voice_label": "美式男声",
+  "source_hash": "3788fbd0f368e8918c33c49cc3217fb727d02e8eaaf464a09bdce29e97e67291",
+  "created_at": "2026-07-11T01:42:39+00:00",
+  "updated_at": "2026-07-11T01:42:39+00:00",
+  "word_count": 138,
+  "removed_count": 0,
+  "full_text": "Behind an apartment building, an empty piece of land once collected weeds and broken boxes. Last spring, several neighbors decided to turn it into a community garden. They cleared the ground, built simple wooden beds, and asked local families what they wanted to grow. Some chose tomatoes and beans, while others planted mint, sunflowers, and strawberries. Every Saturday morning, people bring water, tools, and small bags of kitchen compost. Experienced gardeners share advice, and children make signs for each row of plants. The garden now produces more than vegetables. Neighbors who rarely spoke before have learned one another's names and often stay to talk after the work is finished. At the end of summer, everyone holds a picnic beside the tallest sunflowers. The garden shows how a neglected space can become useful when people care for it together.",
+  "full_audio": "/generated/demo-garden-guy/audio/full-article.mp3",
+  "sentences": [
+    {
+      "text": "Behind an apartment building, an empty piece of land once collected weeds and broken boxes.",
+      "audio": "/generated/demo-garden-guy/audio/sentence-001.mp3"
+    },
+    {
+      "text": "Last spring, several neighbors decided to turn it into a community garden.",
+      "audio": "/generated/demo-garden-guy/audio/sentence-002.mp3"
+    },
+    {
+      "text": "They cleared the ground, built simple wooden beds, and asked local families what they wanted to grow.",
+      "audio": "/generated/demo-garden-guy/audio/sentence-003.mp3"
+    },
+    {
+      "text": "Some chose tomatoes and beans, while others planted mint, sunflowers, and strawberries.",
+      "audio": "/generated/demo-garden-guy/audio/sentence-004.mp3"
+    },
+    {
+      "text": "Every Saturday morning, people bring water, tools, and small bags of kitchen compost.",
+      "audio": "/generated/demo-garden-guy/audio/sentence-005.mp3"
+    },
+    {
+      "text": "Experienced gardeners share advice, and children make signs for each row of plants.",
+      "audio": "/generated/demo-garden-guy/audio/sentence-006.mp3"
+    },
+    {
+      "text": "The garden now produces more than vegetables.",
+      "audio": "/generated/demo-garden-guy/audio/sentence-007.mp3"
+    },
+    {
+      "text": "Neighbors who rarely spoke before have learned one another's names and often stay to talk after the work is finished.",
+      "audio": "/generated/demo-garden-guy/audio/sentence-008.mp3"
+    },
+    {
+      "text": "At the end of summer, everyone holds a picnic beside the tallest sunflowers.",
+      "audio": "/generated/demo-garden-guy/audio/sentence-009.mp3"
+    },
+    {
+      "text": "The garden shows how a neglected space can become useful when people care for it together.",
+      "audio": "/generated/demo-garden-guy/audio/sentence-010.mp3"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "demo-library-guy",
+  "title": "An Afternoon at the Library",
+  "voice": "en-US-GuyNeural",
+  "voice_label": "美式男声",
+  "source_hash": "7eb942cc58b71e1e25eee982e5621088e42dfe6b3280db29e0cb903f107f130d",
+  "created_at": "2026-07-11T01:42:20+00:00",
+  "updated_at": "2026-07-11T01:42:20+00:00",
+  "word_count": 135,
+  "removed_count": 0,
+  "full_text": "Leo visits the neighborhood library every Thursday after lunch. The building is small, but sunlight fills the reading room through three tall windows. He returns a travel book, greets the librarian, and chooses a seat near the history shelves. Today he wants to learn how people built the first public parks in large cities. At first, the article seems difficult because it contains several unfamiliar words. Leo reads one paragraph slowly, writes a short definition beside each new word, and then reads the paragraph aloud. Across the room, a group of children listens to a storyteller. Their laughter makes the quiet library feel warm rather than silent. Before leaving, Leo borrows two books and writes the return date in his calendar. The visit gives him new ideas and a peaceful break from a busy week.",
+  "full_audio": "/generated/demo-library-guy/audio/full-article.mp3",
+  "sentences": [
+    {
+      "text": "Leo visits the neighborhood library every Thursday after lunch.",
+      "audio": "/generated/demo-library-guy/audio/sentence-001.mp3"
+    },
+    {
+      "text": "The building is small, but sunlight fills the reading room through three tall windows.",
+      "audio": "/generated/demo-library-guy/audio/sentence-002.mp3"
+    },
+    {
+      "text": "He returns a travel book, greets the librarian, and chooses a seat near the history shelves.",
+      "audio": "/generated/demo-library-guy/audio/sentence-003.mp3"
+    },
+    {
+      "text": "Today he wants to learn how people built the first public parks in large cities.",
+      "audio": "/generated/demo-library-guy/audio/sentence-004.mp3"
+    },
+    {
+      "text": "At first, the article seems difficult because it contains several unfamiliar words.",
+      "audio": "/generated/demo-library-guy/audio/sentence-005.mp3"
+    },
+    {
+      "text": "Leo reads one paragraph slowly, writes a short definition beside each new word, and then reads the paragraph aloud.",
+      "audio": "/generated/demo-library-guy/audio/sentence-006.mp3"
+    },
+    {
+      "text": "Across the room, a group of children listens to a storyteller.",
+      "audio": "/generated/demo-library-guy/audio/sentence-007.mp3"
+    },
+    {
+      "text": "Their laughter makes the quiet library feel warm rather than silent.",
+      "audio": "/generated/demo-library-guy/audio/sentence-008.mp3"
+    },
+    {
+      "text": "Before leaving, Leo borrows two books and writes the return date in his calendar.",
+      "audio": "/generated/demo-library-guy/audio/sentence-009.mp3"
+    },
+    {
+      "text": "The visit gives him new ideas and a peaceful break from a busy week.",
+      "audio": "/generated/demo-library-guy/audio/sentence-010.mp3"
+    }
+  ]
+}

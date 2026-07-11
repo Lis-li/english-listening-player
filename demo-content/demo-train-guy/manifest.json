@@ -1,0 +1,55 @@
+{
+  "id": "demo-train-guy",
+  "title": "The Last Train Home",
+  "voice": "en-US-GuyNeural",
+  "voice_label": "美式男声",
+  "source_hash": "ec02cd7aea9777810af0e7fcb0f1ec4a19c11d68e72c205c72b061d842ac636e",
+  "created_at": "2026-07-11T01:42:54+00:00",
+  "updated_at": "2026-07-11T01:42:54+00:00",
+  "word_count": 143,
+  "removed_count": 0,
+  "full_text": "Nora leaves the concert hall later than she planned and walks quickly toward the station. The streets are quiet, and a light rain shines under the yellow lamps. When she reaches the platform, the final train is already waiting. She steps inside just before the doors close and finds a seat beside the window. Only a few passengers remain. A nurse reads a message on her phone, a student sleeps against his backpack, and an older man carefully holds a box of flowers. As the train moves through the city, Nora watches shops, bridges, and apartment windows pass in the darkness. She thinks about the music she heard and remembers one beautiful song from the final performance. Twenty minutes later, the train arrives at her stop. The rain has ended, the air feels fresh, and Nora walks home humming the melody to herself.",
+  "full_audio": "/generated/demo-train-guy/audio/full-article.mp3",
+  "sentences": [
+    {
+      "text": "Nora leaves the concert hall later than she planned and walks quickly toward the station.",
+      "audio": "/generated/demo-train-guy/audio/sentence-001.mp3"
+    },
+    {
+      "text": "The streets are quiet, and a light rain shines under the yellow lamps.",
+      "audio": "/generated/demo-train-guy/audio/sentence-002.mp3"
+    },
+    {
+      "text": "When she reaches the platform, the final train is already waiting.",
+      "audio": "/generated/demo-train-guy/audio/sentence-003.mp3"
+    },
+    {
+      "text": "She steps inside just before the doors close and finds a seat beside the window.",
+      "audio": "/generated/demo-train-guy/audio/sentence-004.mp3"
+    },
+    {
+      "text": "Only a few passengers remain.",
+      "audio": "/generated/demo-train-guy/audio/sentence-005.mp3"
+    },
+    {
+      "text": "A nurse reads a message on her phone, a student sleeps against his backpack, and an older man carefully holds a box of flowers.",
+      "audio": "/generated/demo-train-guy/audio/sentence-006.mp3"
+    },
+    {
+      "text": "As the train moves through the city, Nora watches shops, bridges, and apartment windows pass in the darkness.",
+      "audio": "/generated/demo-train-guy/audio/sentence-007.mp3"
+    },
+    {
+      "text": "She thinks about the music she heard and remembers one beautiful song from the final performance.",
+      "audio": "/generated/demo-train-guy/audio/sentence-008.mp3"
+    },
+    {
+      "text": "Twenty minutes later, the train arrives at her stop.",
+      "audio": "/generated/demo-train-guy/audio/sentence-009.mp3"
+    },
+    {
+      "text": "The rain has ended, the air feels fresh, and Nora walks home humming the melody to herself.",
+      "audio": "/generated/demo-train-guy/audio/sentence-010.mp3"
+    }
+  ]
+}
