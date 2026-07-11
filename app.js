@@ -67,91 +67,133 @@ const DEFAULT_VOICE = "en-US-AriaNeural";
 const IS_STATIC_DEMO = window.location.hostname.endsWith(".github.io")
   || new URLSearchParams(window.location.search).has("demo");
 const DEMO_BASE_URL = new URL("./", window.location.href);
-const DEMO_ARTICLE_ID = "original-sample";
-const DEMO_STATE_KEY = "english-listening-player-demo-state";
+const DEMO_STATE_PREFIX = "english-listening-player-demo-state";
 
-let demoManifestPromise = null;
+let demoCatalogPromise = null;
+const demoManifestPromises = new Map();
 
-function readDemoState() {
+function demoStateKey(articleId) {
+  return `${DEMO_STATE_PREFIX}:${articleId}`;
+}
+
+function readDemoState(articleId) {
   try {
     return {
       ...defaultClientState(),
-      ...JSON.parse(window.localStorage.getItem(DEMO_STATE_KEY) || "{}")
+      ...JSON.parse(window.localStorage.getItem(demoStateKey(articleId)) || "{}")
     };
   } catch {
     return defaultClientState();
   }
 }
 
-function writeDemoState(state) {
-  window.localStorage.setItem(DEMO_STATE_KEY, JSON.stringify(state));
+function writeDemoState(articleId, state) {
+  window.localStorage.setItem(demoStateKey(articleId), JSON.stringify(state));
   return state;
 }
 
-async function loadDemoManifest() {
-  if (!demoManifestPromise) {
-    demoManifestPromise = fetch(
-      new URL("generated/original-sample/manifest.json", DEMO_BASE_URL)
-    ).then(async (response) => {
-      if (!response.ok) throw new Error("在线示例资源加载失败");
+async function loadDemoCatalog() {
+  if (!demoCatalogPromise) {
+    demoCatalogPromise = fetch(new URL("demo-content/catalog.json", DEMO_BASE_URL))
+      .then(async (response) => {
+        if (!response.ok) throw new Error("在线资料库加载失败");
+        return response.json();
+      });
+  }
+  return demoCatalogPromise;
+}
+
+async function loadDemoArticle(articleId, voice = DEFAULT_VOICE) {
+  const catalog = await loadDemoCatalog();
+  const entry = catalog.articles.find((item) => item.id === articleId);
+  if (!entry) throw new Error("在线文章不存在");
+
+  const normalizedVoice = entry.variants[voice] ? voice : DEFAULT_VOICE;
+  const manifestPath = entry.variants[normalizedVoice];
+  if (!demoManifestPromises.has(manifestPath)) {
+    const manifestUrl = new URL(manifestPath, DEMO_BASE_URL);
+    demoManifestPromises.set(manifestPath, fetch(manifestUrl).then(async (response) => {
+      if (!response.ok) throw new Error("在线音频清单加载失败");
       const payload = await response.json();
-      const assetUrl = (path) => new URL(String(path).replace(/^\/+/, ""), DEMO_BASE_URL).href;
-      payload.full_audio = assetUrl(payload.full_audio);
+      const manifestDir = new URL("./", manifestUrl);
+      payload.full_audio = new URL("audio/full-article.mp3", manifestDir).href;
       payload.sentences = payload.sentences.map((sentence) => ({
         ...sentence,
-        audio: assetUrl(sentence.audio)
+        audio: new URL(`audio/${String(sentence.audio).split("/").pop()}`, manifestDir).href
       }));
       return payload;
-    });
+    }));
   }
-  return structuredClone(await demoManifestPromise);
+
+  const payload = structuredClone(await demoManifestPromises.get(manifestPath));
+  payload.id = entry.id;
+  payload.source_hash = `demo-${entry.id}`;
+  payload.voice = normalizedVoice;
+  payload.state = readDemoState(entry.id);
+  return payload;
 }
 
 async function demoApi(url, options = {}) {
   const method = String(options.method || "GET").toUpperCase();
-  const manifest = await loadDemoManifest();
-  const state = readDemoState();
-  const articleWithState = { ...manifest, state };
+  const catalog = await loadDemoCatalog();
 
-  if (method === "GET" && (url === "/api/sample" || url === `/api/articles/${DEMO_ARTICLE_ID}`)) {
-    return articleWithState;
+  if (method === "GET" && url === "/api/sample") {
+    return loadDemoArticle(catalog.default_article);
   }
   if (method === "GET" && url === "/api/articles") {
     return {
-      articles: [{
-        id: manifest.id,
-        title: manifest.title,
-        voice: manifest.voice,
-        source_hash: manifest.source_hash,
-        word_count: manifest.word_count,
-        sentence_count: manifest.sentences.length,
-        note_count: state.notes?.length || 0
-      }]
+      articles: catalog.articles.map((entry) => ({
+        id: entry.id,
+        title: entry.title,
+        voice: DEFAULT_VOICE,
+        source_hash: `demo-${entry.id}`,
+        word_count: entry.word_count,
+        sentence_count: entry.sentence_count,
+        note_count: readDemoState(entry.id).notes?.length || 0
+      }))
     };
-  }
-  if (method === "POST" && url === `/api/articles/${DEMO_ARTICLE_ID}/state`) {
-    return writeDemoState(JSON.parse(options.body || "{}"));
   }
   if (method === "GET" && url === "/api/notes") {
-    const notes = state.notes || [];
     return {
-      groups: notes.length ? [{
-        id: manifest.id,
-        title: manifest.title,
-        source_hash: manifest.source_hash,
-        word_count: manifest.word_count,
-        sentence_count: manifest.sentences.length,
-        note_count: notes.length,
-        notes
-      }] : []
+      groups: catalog.articles.flatMap((entry) => {
+        const notes = readDemoState(entry.id).notes || [];
+        return notes.length ? [{
+          id: entry.id,
+          title: entry.title,
+          source_hash: `demo-${entry.id}`,
+          word_count: entry.word_count,
+          sentence_count: entry.sentence_count,
+          note_count: notes.length,
+          notes
+        }] : [];
+      })
     };
   }
-  if (method === "POST" && url === `/api/articles/${DEMO_ARTICLE_ID}/notes`) {
+
+  const articleMatch = url.match(/^\/api\/articles\/([a-z0-9-]+)(?:\/(state|notes|voice))?$/i);
+  if (!articleMatch) {
+    throw new Error("此功能需要 Python 后端，在线 Demo 仅提供预生成的原创资料。");
+  }
+
+  const [, articleId, action] = articleMatch;
+  if (method === "GET" && !action) {
+    return loadDemoArticle(articleId);
+  }
+  if (method === "POST" && action === "voice") {
+    const voice = JSON.parse(options.body || "{}").voice || DEFAULT_VOICE;
+    return loadDemoArticle(articleId, voice);
+  }
+  if (method === "POST" && action === "state") {
+    return writeDemoState(articleId, JSON.parse(options.body || "{}"));
+  }
+  if (method === "POST" && action === "notes") {
+    const state = readDemoState(articleId);
     const notes = JSON.parse(options.body || "{}").notes || [];
-    writeDemoState({ ...state, notes });
+    writeDemoState(articleId, { ...state, notes });
     return { notes, note_count: notes.length };
   }
-  throw new Error("此功能需要 Python 后端，在线 Demo 仅提供原创示例体验。");
+
+  throw new Error("此功能需要 Python 后端，在线 Demo 仅提供预生成的原创资料。");
 }
 
 const articleControls = [
@@ -703,6 +745,7 @@ function renderLibrary(items) {
     remove.className = "delete-button";
     remove.type = "button";
     remove.textContent = "删除";
+    remove.hidden = IS_STATIC_DEMO;
     remove.addEventListener("click", async () => {
       if (!window.confirm(`删除“${item.title}”及其音频和笔记？`)) return;
       await api(`/api/articles/${item.id}`, { method: "DELETE" });
@@ -1176,7 +1219,7 @@ progress.addEventListener("change", seekFromProgress);
 window.addEventListener("beforeunload", () => {
   if (!article) return;
   if (IS_STATIC_DEMO) {
-    writeDemoState(statePayload());
+    writeDemoState(article.id, statePayload());
     return;
   }
   navigator.sendBeacon(
@@ -1205,11 +1248,10 @@ async function bootstrap() {
   importButton.hidden = true;
   pasteButton.hidden = true;
   playSelectionButton.hidden = true;
-  voiceButtons.forEach((button) => { button.disabled = true; });
 
   const banner = document.createElement("aside");
   banner.className = "demo-banner";
-  banner.textContent = "在线 Demo：可试听原创示例、逐句练习和保存本地学习进度。导入文档和生成新语音需在电脑上运行完整版。";
+  banner.textContent = "在线 Demo：资料库内含 4 篇原创文章，可切换美式男声/女声，并在浏览器保存听写、笔记和进度。导入新文章需在电脑上运行完整版。";
   document.body.prepend(banner);
 
   try {
