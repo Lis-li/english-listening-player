@@ -1,6 +1,6 @@
 # English Listening Player
 
-[**中文说明**](#中文说明) · [**English**](#english)
+[**中文说明**](#中文说明) · [**English Instructions**](#english)
 
 > ## 🎧 [打开在线 Demo / Open the Live Online Demo](https://lis-li.github.io/english-listening-player/)
 >
