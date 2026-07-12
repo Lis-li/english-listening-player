@@ -82,7 +82,7 @@ MIT License。详见 [LICENSE](LICENSE)。
 
 ---
 
-## English
+## English Instructions
 
 A local-first English listening practice web app. Import English text or a `.docx` document, generate natural speech, practise sentence by sentence, take notes, and save learning progress.
 
