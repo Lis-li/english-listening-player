@@ -220,6 +220,7 @@ let selectedVoice = DEFAULT_VOICE;
 let sourceKind = "article";
 let pendingSeek = 0;
 let savedArticleTime = 0;
+let selectionEndTime = null;
 let selectionData = null;
 let noteDraft = null;
 let saveTimer = null;
@@ -428,6 +429,7 @@ function goBack() {
 
 function setSource(source, { autoplay = false, seek = 0, kind = "article" } = {}) {
   audio.pause();
+  selectionEndTime = null;
   sourceKind = kind;
   audio.loop = false;
   returnArticleButton.hidden = kind !== "selection";
@@ -969,6 +971,10 @@ async function playSavedNote(group, note) {
 
 async function playText(text) {
   if (!article) return;
+  if (IS_STATIC_DEMO) {
+    playDemoSelection(text);
+    return;
+  }
   setBusy(true, "正在准备选中内容的发音");
   try {
     savedArticleTime = sourceKind === "article" ? audio.currentTime : savedArticleTime;
@@ -985,6 +991,44 @@ async function playText(text) {
     window.alert(error.message);
   } finally {
     setBusy(false);
+  }
+}
+
+function playDemoSelection(text) {
+  const sentenceIndex = selectionData?.sentence_index ?? currentIndex;
+  const sentence = article?.sentences?.[sentenceIndex];
+  if (!sentence?.audio) {
+    window.alert("当前选中内容没有可播放的示例音频。");
+    return;
+  }
+
+  savedArticleTime = sourceKind === "article" ? audio.currentTime : savedArticleTime;
+  const context = selectionData?.context || sentence.text || text;
+  const matchIndex = context.toLocaleLowerCase().indexOf(text.toLocaleLowerCase());
+  const startRatio = matchIndex >= 0 ? matchIndex / Math.max(1, context.length) : 0;
+  const endRatio = matchIndex >= 0
+    ? (matchIndex + text.length) / Math.max(1, context.length)
+    : 1;
+
+  playerHeading.textContent = "选中内容";
+  currentSentence.textContent = text;
+  currentSentence.classList.remove("empty-message");
+  renderDictationPractice();
+  setSource(sentence.audio, { autoplay: false, kind: "selection" });
+
+  const playRange = () => {
+    const padding = Math.min(0.12, audio.duration * 0.02);
+    const startTime = Math.max(0, audio.duration * startRatio - padding);
+    selectionEndTime = Math.min(audio.duration, audio.duration * endRatio + padding);
+    audio.currentTime = startTime;
+    applyPlaybackSpeed();
+    audio.play().catch(() => {});
+  };
+
+  if (audio.readyState >= 1 && Number.isFinite(audio.duration)) {
+    playRange();
+  } else {
+    audio.addEventListener("loadedmetadata", playRange, { once: true });
   }
 }
 
@@ -1194,6 +1238,10 @@ audio.addEventListener("loadedmetadata", () => {
 });
 audio.addEventListener("timeupdate", () => {
   currentTime.textContent = formatTime(audio.currentTime);
+  if (sourceKind === "selection" && selectionEndTime !== null && audio.currentTime >= selectionEndTime) {
+    selectionEndTime = null;
+    audio.pause();
+  }
   if (!progress.matches(":active")) {
     progress.value = audio.duration
       ? Math.round((audio.currentTime / audio.duration) * 1000)
@@ -1247,7 +1295,6 @@ async function bootstrap() {
   document.body.classList.add("static-demo");
   importButton.hidden = true;
   pasteButton.hidden = true;
-  playSelectionButton.hidden = true;
 
   const banner = document.createElement("aside");
   banner.className = "demo-banner";
