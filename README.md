@@ -61,12 +61,17 @@ python -m venv .venv
 Windows PowerShell：
 
 ```powershell
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python server.py
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe server.py
 ```
 
-然后打开终端中显示的本地网址。也可以在 Windows 上运行 `Open English Player.bat` 或 `start_player.ps1`。
+这种方式不需要激活虚拟环境，可以避免 PowerShell 执行策略导致的 `Activate.ps1` 报错。如果系统找不到 `python`，创建虚拟环境时可改用：
+
+```powershell
+py -3 -m venv .venv
+```
+
+启动成功后打开终端中显示的本地网址。以后也可以在 Windows 上运行 `Open English Player.bat` 或 `start_player.ps1`。
 
 ### 主要文件
 
@@ -134,12 +139,17 @@ python -m venv .venv
 On Windows PowerShell:
 
 ```powershell
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python server.py
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe server.py
 ```
 
-Open the local address printed in the terminal. Windows users can also run `Open English Player.bat` or `start_player.ps1`.
+This does not require activating the virtual environment and avoids PowerShell execution-policy errors from `Activate.ps1`. If `python` is not found, create the virtual environment with:
+
+```powershell
+py -3 -m venv .venv
+```
+
+After startup, open the local address printed in the terminal. Windows users can also run `Open English Player.bat` or `start_player.ps1` later.
 
 ### Main files
 
