@@ -2,6 +2,12 @@
 generated/*
 !generated/original-sample/
 !generated/original-sample/**
+!generated/fictional-solar-clinics/
+!generated/fictional-solar-clinics/**
+!generated/fictional-humanoid-factory/
+!generated/fictional-humanoid-factory/**
+!generated/fictional-local-ai-chip/
+!generated/fictional-local-ai-chip/**
 
 # Runtime logs and Python caches
 *.log

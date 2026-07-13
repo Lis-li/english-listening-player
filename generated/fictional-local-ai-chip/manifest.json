@@ -1,0 +1,67 @@
+{
+  "id": "fictional-local-ai-chip",
+  "title": "Fictional Report: New Laptop Chip Runs AI Tools Without Cloud Connection",
+  "voice": "en-US-AriaNeural",
+  "voice_label": "美式女声",
+  "source_hash": null,
+  "created_at": "2026-07-13T01:30:26+00:00",
+  "updated_at": "2026-07-13T01:30:26+00:00",
+  "word_count": 229,
+  "removed_count": 0,
+  "full_text": "A fictional technology company has announced a laptop processor designed to run advanced artificial-intelligence tools without sending personal data to cloud servers. The company, Lumen Circuit, says its new chip can summarise documents, improve video calls, and organise photographs while the computer remains offline. Most powerful AI services currently depend on large data centres. Lumen says its processor includes a dedicated neural engine that performs smaller tasks directly on the laptop. This could reduce delays, lower internet use, and give users more control over sensitive files. At a demonstration in the fictional city of Westbridge, engineers used the chip to create live captions during a noisy interview. They also searched hundreds of local documents and removed background noise from a recorded lecture. None of the test files left the device, according to the company. Independent researchers welcomed the focus on privacy but said manufacturers must explain exactly which features still require an online account. They also noted that local AI processing can use significant battery power when models run continuously. The first laptops containing the processor are expected to arrive later this year. Lumen has not announced final prices, although it says the chip will appear in both professional and student models. Analysts believe local AI will become common as processors improve, but they caution that clear security updates and honest performance tests will be essential for public trust.",
+  "full_audio": "/generated/fictional-local-ai-chip/audio/full-article.mp3",
+  "sentences": [
+    {
+      "text": "A fictional technology company has announced a laptop processor designed to run advanced artificial-intelligence tools without sending personal data to cloud servers.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-001.mp3"
+    },
+    {
+      "text": "The company, Lumen Circuit, says its new chip can summarise documents, improve video calls, and organise photographs while the computer remains offline.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-002.mp3"
+    },
+    {
+      "text": "Most powerful AI services currently depend on large data centres.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-003.mp3"
+    },
+    {
+      "text": "Lumen says its processor includes a dedicated neural engine that performs smaller tasks directly on the laptop.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-004.mp3"
+    },
+    {
+      "text": "This could reduce delays, lower internet use, and give users more control over sensitive files.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-005.mp3"
+    },
+    {
+      "text": "At a demonstration in the fictional city of Westbridge, engineers used the chip to create live captions during a noisy interview.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-006.mp3"
+    },
+    {
+      "text": "They also searched hundreds of local documents and removed background noise from a recorded lecture.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-007.mp3"
+    },
+    {
+      "text": "None of the test files left the device, according to the company.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-008.mp3"
+    },
+    {
+      "text": "Independent researchers welcomed the focus on privacy but said manufacturers must explain exactly which features still require an online account.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-009.mp3"
+    },
+    {
+      "text": "They also noted that local AI processing can use significant battery power when models run continuously.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-010.mp3"
+    },
+    {
+      "text": "The first laptops containing the processor are expected to arrive later this year.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-011.mp3"
+    },
+    {
+      "text": "Lumen has not announced final prices, although it says the chip will appear in both professional and student models.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-012.mp3"
+    },
+    {
+      "text": "Analysts believe local AI will become common as processors improve, but they caution that clear security updates and honest performance tests will be essential for public trust.",
+      "audio": "/generated/fictional-local-ai-chip/audio/sentence-013.mp3"
+    }
+  ]
+}

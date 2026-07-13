@@ -1,0 +1,11 @@
+Fictional Report: Car Factory Tests Humanoid Robots on Overnight Shift
+
+A fictional electric-car manufacturer has begun testing humanoid robots at its Northport assembly plant, where the machines carry parts and inspect equipment during the overnight shift. The company, called Meridian Motors, says the six-month trial will focus on repetitive jobs in areas that can be noisy, hot, or difficult for workers to reach.
+
+The robots walk on two legs and use camera systems to identify tools, boxes, and warning signs. During the first stage, they will move battery covers between storage racks and production lines. Engineers will supervise every task from a nearby control room and can stop a robot immediately if it enters a restricted zone.
+
+Meridian says no employees will lose their jobs during the test. Instead, experienced workers are helping programmers teach the machines how to handle unexpected situations, such as a blocked path or a damaged container. The company has also created new training courses in robot maintenance and safety monitoring.
+
+Some labour representatives remain cautious. They want independent safety checks and clear rules about how information from workplace cameras will be stored. They also argue that automation should reduce dangerous work rather than simply increase production targets.
+
+Industry researchers say humanoid robots may be useful in factories designed for people because they can use existing doors, stairs, and tools. However, the technology is still expensive and slower than specialised machines. Meridian will publish a safety report before deciding whether to expand the programme.

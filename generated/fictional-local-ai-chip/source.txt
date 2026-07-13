@@ -1,0 +1,11 @@
+Fictional Report: New Laptop Chip Runs AI Tools Without Cloud Connection
+
+A fictional technology company has announced a laptop processor designed to run advanced artificial-intelligence tools without sending personal data to cloud servers. The company, Lumen Circuit, says its new chip can summarise documents, improve video calls, and organise photographs while the computer remains offline.
+
+Most powerful AI services currently depend on large data centres. Lumen says its processor includes a dedicated neural engine that performs smaller tasks directly on the laptop. This could reduce delays, lower internet use, and give users more control over sensitive files.
+
+At a demonstration in the fictional city of Westbridge, engineers used the chip to create live captions during a noisy interview. They also searched hundreds of local documents and removed background noise from a recorded lecture. None of the test files left the device, according to the company.
+
+Independent researchers welcomed the focus on privacy but said manufacturers must explain exactly which features still require an online account. They also noted that local AI processing can use significant battery power when models run continuously.
+
+The first laptops containing the processor are expected to arrive later this year. Lumen has not announced final prices, although it says the chip will appear in both professional and student models. Analysts believe local AI will become common as processors improve, but they caution that clear security updates and honest performance tests will be essential for public trust.
